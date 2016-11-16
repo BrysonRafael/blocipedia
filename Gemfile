@@ -17,7 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'bootstrap'
+gem 'bootstrap', '~> 4.0.0.alpha5'
 gem 'figaro'
 gem 'pry'
 
@@ -33,4 +33,4 @@ end
 
 gem 'devise'
 gem 'bootstrap-sass', '~> 3.3.6'
-gem 'sprockets-rails'
+gem 'sprockets-rails', '>= 2.3.2'

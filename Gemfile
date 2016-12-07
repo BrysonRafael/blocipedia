@@ -34,3 +34,4 @@ end
 gem 'devise'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sprockets-rails', '>= 2.3.2'
+gem 'pundit'

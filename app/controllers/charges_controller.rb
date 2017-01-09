@@ -2,13 +2,12 @@ class ChargesController < ApplicationController
   include ChargesHelper
   def create
     Stripe.api_key = "sk_test_Xo8AAESZajnBsYkxzYTQcgzl"
-
     plan = Stripe::Plan.create(
-      :name => "Basic Plan",
-      :id => "basic-monthly",
+      :name => "Premium Plan",
+      :id => "premium-monthly",
       :interval => "month",
       :currency => "usd",
-      :amount => 0,
+      :amount => 1000,
     )
 
     # Creates a Stripe Customer object, for associating
@@ -20,14 +19,14 @@ class ChargesController < ApplicationController
 
     Stripe::Subscription.create(
       :customer => customer.id,
-        :plan => "basic-monthly",
+      :plan => "basic-monthly",
     )
 
     # Where the real magic happens
     charge = Stripe::Charge.create(
       customer: customer.id, # Note -- this is NOT the user_id in your app
       amount: Amount.default,
-      description: "BigMoney Membership - #{current_user.email}",
+      description: "Premium Membership - #{current_user.email}",
       currency: 'usd'
     )
 
@@ -45,8 +44,8 @@ class ChargesController < ApplicationController
   def new
    @stripe_btn_data = {
      key: "#{ Rails.configuration.stripe[:publishable_key] }",
-     description: "BigMoney Membership - #{current_user.email}",
+     description: "Premium Membership - #{current_user.email}",
      amount: Amount.default
    }
- end
+  end
 end

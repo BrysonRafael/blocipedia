@@ -2,6 +2,16 @@ class ChargesController < ApplicationController
   include ChargesHelper
   def create
     Stripe.api_key = "sk_test_Xo8AAESZajnBsYkxzYTQcgzl"
+
+
+    plan = stripe.Plan.create(
+      name="Basic Plan",
+      id="basic-monthly",
+      interval="month",
+      currency="usd",
+      amount=0,
+    )  
+
     plan = Stripe::Plan.create(
       :name => "Premium Plan",
       :id => "premium-monthly",

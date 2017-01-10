@@ -10,7 +10,7 @@ class ChargesController < ApplicationController
       interval="month",
       currency="usd",
       amount=0,
-    )  
+    )
 
     plan = Stripe::Plan.create(
       :name => "Premium Plan",
@@ -57,5 +57,13 @@ class ChargesController < ApplicationController
      description: "Premium Membership - #{current_user.email}",
      amount: Amount.default
    }
+  end
+
+  def edit
+    Stripe.api_key = "sk_test_Xo8AAESZajnBsYkxzYTQcgzl"
+
+    subscription = Stripe::Subscription.retrieve("sub_9sncpu2x5mSXrQ")
+    subscription.plan = "basic-monthly"
+    subscription.save
   end
 end

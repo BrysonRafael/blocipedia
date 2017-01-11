@@ -3,22 +3,21 @@ class ChargesController < ApplicationController
   def create
     Stripe.api_key = "sk_test_Xo8AAESZajnBsYkxzYTQcgzl"
 
-
-    plan = stripe.Plan.create(
-      name="Basic Plan",
-      id="basic-monthly",
-      interval="month",
-      currency="usd",
-      amount=0,
-    )
-
-    plan = Stripe::Plan.create(
-      :name => "Premium Plan",
-      :id => "premium-monthly",
-      :interval => "month",
-      :currency => "usd",
-      :amount => 1000,
-    )
+    # plan = stripe.Plan.create(
+    #   name="Basic Plan",
+    #   id="basic-monthly",
+    #   interval="month",
+    #   currency="usd",
+    #   amount=0,
+    # )
+    #
+    # plan = Stripe::Plan.create(
+    #   :name => "Premium Plan",
+    #   :id => "premium-monthly",
+    #   :interval => "month",
+    #   :currency => "usd",
+    #   :amount => 1000,
+    # )
 
     # Creates a Stripe Customer object, for associating
     # with the charge
@@ -27,18 +26,21 @@ class ChargesController < ApplicationController
       card: params[:stripeToken]
     )
 
-    Stripe::Subscription.create(
+    subscription = Stripe::Subscription.create(
       :customer => customer.id,
-      :plan => "basic-monthly",
+      :plan => "premium-monthly"
     )
 
+    current_user.sub_id = subscription.id
+    current_user.is_premium = true
+    current_user.save(validate: false)
     # Where the real magic happens
-    charge = Stripe::Charge.create(
-      customer: customer.id, # Note -- this is NOT the user_id in your app
-      amount: Amount.default,
-      description: "Premium Membership - #{current_user.email}",
-      currency: 'usd'
-    )
+    # charge = Stripe::Charge.create(
+    #   customer: customer.id, # Note -- this is NOT the user_id in your app
+    #   amount: Amount.default,
+    #   description: "Premium Membership - #{current_user.email}",
+    #   currency: 'usd'
+    # )
 
     flash[:notice] = "Thanks for all the money, #{current_user.email}! Feel free to pay me again."
     redirect_to "/" # or wherever

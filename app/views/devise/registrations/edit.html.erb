@@ -35,9 +35,19 @@
     <%= f.submit "Update" %>
   </div>
 <% end %>
+  <br>
+
+<h3>Edit my account</h3>
+  <% if current_user.is_premium %>
+    <p>Downgrade to basic <%= button_to "Basic Account", charge_path(current_user.sub_id), data: { confirm: "Are you sure?" }, method: :put %></p>
+  <% else %>
+    <p>Upgrade to Premium! <%= button_to "Premium Account", new_charge_path, data: { confirm: "Are you sure?" }, method: :edit %></p>
+  <% end %>
+
+<br>
 
 <h3>Cancel my account</h3>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+<p>Unhappy? <%= button_to "Cancel My Account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
 
 <%= link_to "Back", :back %>

@@ -61,11 +61,15 @@ class ChargesController < ApplicationController
    }
   end
 
-  def edit
+  def update()
+    sub_id = params[:id]
     Stripe.api_key = "sk_test_Xo8AAESZajnBsYkxzYTQcgzl"
 
-    subscription = Stripe::Subscription.retrieve("sub_9sncpu2x5mSXrQ")
+    subscription = Stripe::Subscription.retrieve(sub_id)
     subscription.plan = "basic-monthly"
     subscription.save
+
+    flash[:notice] = "Well screw you too!"
+    redirect_to "/"
   end
 end

@@ -69,6 +69,10 @@ class ChargesController < ApplicationController
     subscription.plan = "basic-monthly"
     subscription.save
 
+    current_user.is_premium = false
+    current_user.sub_id = nil
+    current_user.save()
+
     flash[:notice] = "Well screw you too!"
     redirect_to "/"
   end

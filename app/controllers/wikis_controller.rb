@@ -1,6 +1,11 @@
 class WikisController < ApplicationController
   def index
-    @wikis = Wiki.all
+    user_id = -999
+    if current_user != nil
+      user_id = current_user.id
+    end
+
+    @wikis = Wiki.where("private IS NULL or private = ? or user_id = ?", false, user_id)
   end
 
   def show
@@ -15,6 +20,8 @@ class WikisController < ApplicationController
     @wiki = Wiki.new
     @wiki.title = params[:wiki][:title]
     @wiki.body = params[:wiki][:body]
+    @wiki.private = params[:wiki][:private]
+    @wiki.user_id = current_user.id
 
     if @wiki.save
       redirect_to @wiki
@@ -32,6 +39,8 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     @wiki.title = params[:wiki][:title]
     @wiki.body = params[:wiki][:body]
+    @wiki.private = params[:wiki][:private]
+    @wiki.user_id = current_user.id
 
     if @wiki.save
       flash[:notice] = "Wiki was updated."

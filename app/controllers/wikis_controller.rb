@@ -14,6 +14,7 @@ class WikisController < ApplicationController
 
   def new
     @wiki = Wiki.new
+    @wiki.private = params[:wiki][:private]
   end
 
   def create
@@ -48,14 +49,6 @@ class WikisController < ApplicationController
     else
       flash.now[:alert] = "There was an error saving the wiki. Please try again."
       render :edit
-    end
-
-    if current_user.is_premium = false
-      flash[:notice] = "All of your private wikis will be converted to public wikis."
-      @wiki.private = nil
-    #else
-      #flash.now[:alert] = "There was an error downgrading your account. Please try again."
-      #render :edit
     end
   end
 

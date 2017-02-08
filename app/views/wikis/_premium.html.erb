@@ -1,4 +1,4 @@
-<% if current_user.is_premium %>
+<% if current_user != nil && current_user.is_premium %>
   <div class="form-group">
     <%= f.label :private, class: 'checkbox' do %>
       <%= f.check_box :private %> Private wiki

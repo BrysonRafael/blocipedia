@@ -73,6 +73,12 @@ class ChargesController < ApplicationController
     current_user.sub_id = nil
     current_user.save()
 
+    wikis = Wiki.where("private = ? and user_id = ?", true, current_user.id)
+    wikis.each do |w|
+      w.private = false
+      w.save()
+    end
+
     flash[:notice] = "All of your private wikis have been made public."
     redirect_to "/"
   end

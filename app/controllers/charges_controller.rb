@@ -73,7 +73,7 @@ class ChargesController < ApplicationController
     current_user.sub_id = nil
     current_user.save()
 
-    flash[:notice] = "Well screw you too!"
+    flash[:notice] = "All of your private wikis have been made public."
     redirect_to "/"
   end
 end

@@ -23,6 +23,8 @@ class WikisController < ApplicationController
     @wiki.private = params[:wiki][:private]
     @wiki.user_id = current_user.id
 
+
+
     if @wiki.save
       redirect_to @wiki
     else
@@ -32,7 +34,9 @@ class WikisController < ApplicationController
   end
 
   def edit
+    require 'redcarpet'
     @wiki = Wiki.find(params[:id])
+    markdown = Redcarpet::Markdown.new(renderer, extensions = {})
   end
 
   def update

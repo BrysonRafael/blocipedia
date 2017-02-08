@@ -36,7 +36,6 @@ class WikisController < ApplicationController
   def edit
     require 'redcarpet'
     @wiki = Wiki.find(params[:id])
-    markdown = Redcarpet::Markdown.new(renderer, extensions = {})
   end
 
   def update

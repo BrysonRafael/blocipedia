@@ -5,6 +5,7 @@ class WikisController < ApplicationController
       user_id = current_user.id
     end
 
+    @wikis = policy_scope(Wiki)
     @wikis = Wiki.where("private IS NULL or private = ? or user_id = ?", false, user_id)
   end
 

@@ -18,10 +18,10 @@ class WikiPolicy < ApplicationPolicy
       wikis = []
       if user == 'admin'
         wikis = scope.all #admin should be able to view all wikis
-      elsif user == 'premium'
+      elsif user.is_premium == true
         all_wikis = scope.all
         all_wikis.each do |wiki|
-          if wiki.public? || wiki.owner == user || wiki.collaborators.include?(user)
+          if !wiki.private || wiki.user_id == user.id || wiki.collaborators.include?(user.id)
             wikis << wiki
           end
         end
@@ -29,7 +29,7 @@ class WikiPolicy < ApplicationPolicy
         all_wikis = scope.all
         wikis = []
         all_wikis.each do |wiki|
-          if wiki.public? || wiki.collaborators.include?(user)
+          if !wiki.private || wiki.collaborators.include?(user.id)
             wikis << wiki #basic users can only see public wikis and private wikis the collaborate on
           end
         end

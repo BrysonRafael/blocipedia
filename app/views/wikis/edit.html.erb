@@ -24,9 +24,7 @@
       </div>
       <div class="col-md-8">
         <%= render partial: 'premium', locals: { f: f } %>
-        <%= if wiki.private %>
-          <%= render 'form' %>
-        <% end %>
+        <%= render partial: 'collaborators', locals: { f: f } %>
       </div>
     <% end %>
   </div>

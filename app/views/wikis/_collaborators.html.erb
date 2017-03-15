@@ -1,0 +1,7 @@
+<% if current_user != nil && current_user.is_premium && @wiki.private %>
+  <div class="form-group">
+    <%= f.label :collaborators, class: 'checkbox' do %>
+      <%= f.text_field :collaborators, class: 'form-control', placeholder: "Enter names of collaborators" %>
+    <% end %>
+  </div>
+<% end %>

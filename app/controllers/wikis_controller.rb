@@ -46,6 +46,9 @@ class WikisController < ApplicationController
     @wiki.body = params[:wiki][:body]
     @wiki.private = params[:wiki][:private]
     @wiki.user_id = current_user.id
+    @wiki.collaborators = params[:wiki][:collaborators]
+
+    
 
     if @wiki.save
       flash[:notice] = "Wiki was updated."
